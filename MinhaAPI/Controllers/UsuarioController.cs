@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MinhaAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,16 +11,16 @@ namespace MinhaAPI.Controllers
     {
         // GET: api/<UsuarioController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<UsuarioModel>> BuscarTodosUsuarios()  // nome do endpoint
         {
-            return new string[] { "value1", "value2" };
+            return Ok();
         }
 
         // GET api/<UsuarioController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}")]   // isto é um verbo    e o método é um end point
         public string Get(int id)
         {
-            return "value";
+            return ;
         }
 
         // POST api/<UsuarioController>
