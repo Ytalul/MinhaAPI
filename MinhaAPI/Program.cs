@@ -2,7 +2,7 @@ namespace MinhaAPI
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main(string[] args){ 
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +25,6 @@ namespace MinhaAPI
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
