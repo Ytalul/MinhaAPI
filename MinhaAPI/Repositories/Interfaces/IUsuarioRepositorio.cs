@@ -8,6 +8,6 @@ namespace MinhaAPI.Repositories.Interfaces
         Task<UsuarioModel> ProcurarPorId(int id);
         Task<UsuarioModel> AdicionarUsuario(UsuarioModel usuario);
         Task<UsuarioModel> AtualizarUsuario(int id, UsuarioModel usuario);
-        Task<bool> ApagarUsuario();
+        Task<bool> ApagarUsuario(int id);
     }
 }

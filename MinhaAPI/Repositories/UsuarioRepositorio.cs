@@ -23,7 +23,7 @@ namespace MinhaAPI.Repositories
         }
         public async Task<UsuarioModel> AdicionarUsuario(UsuarioModel usuario)
         {
-            _contexto.Usuarios.AddAsync(usuario);
+            await _contexto.Usuarios.AddAsync(usuario);
             _contexto.SaveChanges();
             return usuario;
         }
@@ -37,12 +37,20 @@ namespace MinhaAPI.Repositories
             usuariodb.Nome = usuario.Nome;
             usuariodb.Email = usuario.Email;
             _contexto.Usuarios.Update(usuariodb);
-            _contexto.SaveChanges();
+            await _contexto.SaveChangesAsync();
             return usuariodb;
         }
-        public Task<bool> ApagarUsuario()
+        public async Task<bool> ApagarUsuario(int id)
         {
-            throw new NotImplementedException();
+            UsuarioModel RemoverUsuario = await ProcurarPorId(id);
+            if ( RemoverUsuario == null )
+            {
+                throw new Exception($"Usuário de ID={id} não encontrado.");
+            }
+            _contexto.Usuarios.Remove(RemoverUsuario);
+            await _contexto.SaveChangesAsync();
+            return true;
+
         }
     }
 }

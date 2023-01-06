@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MinhaAPI.Map;
 using MinhaAPI.Models;
 
 namespace MinhaAPI.Data
@@ -13,6 +14,8 @@ namespace MinhaAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
+            modelbuilder.ApplyConfiguration(new UsuarioMap());
+            modelbuilder.ApplyConfiguration(new TarefaMap());
             base.OnModelCreating(modelbuilder);
         }
     }
