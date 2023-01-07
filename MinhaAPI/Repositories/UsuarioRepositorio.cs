@@ -19,7 +19,8 @@ namespace MinhaAPI.Repositories
 
         public async Task<UsuarioModel> ProcurarPorId(int id)
         {
-            return await _contexto.Usuarios.FirstOrDefaultAsync(user => user.Id == id);
+            UsuarioModel user = await _contexto.Usuarios.FirstOrDefaultAsync(user => user.Id == id);
+            return user;
         }
         public async Task<UsuarioModel> AdicionarUsuario(UsuarioModel usuario)
         {

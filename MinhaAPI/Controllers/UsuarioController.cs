@@ -27,29 +27,52 @@ namespace MinhaAPI.Controllers
         public async Task<ActionResult<UsuarioModel>> ProcurarUsuario(int id)
         {
             UsuarioModel usuario = await _repositorio.ProcurarPorId(id);
-            return Ok(usuario);
+            if (usuario == null)
+            {
+                return Ok(new ErrorMessage(403, "Usuario Não encontrado"));
+            }
+            else { return Ok(usuario);  }
+            
         }
 
         [HttpPost]
         public async Task<ActionResult<UsuarioModel>> Adicionar([FromBody]UsuarioModel usuario)
         {
-            usuario.Id = 0;
-            UsuarioModel user = await _repositorio.AdicionarUsuario(usuario);
-            return Ok(user);
+            if ( ModelState.IsValid)
+            {
+                usuario.Id = 0;
+                UsuarioModel user = await _repositorio.AdicionarUsuario(usuario);
+                return Ok(user);
+            }
+            else { return Ok(new ErrorMessage(403, "Usuário inválido para adicionar, preencha os campos corretamente.")); }
+            
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<UsuarioModel>> Atualizar(int id, [FromBody] UsuarioModel usuario)
         {
-            UsuarioModel user =  await _repositorio.AtualizarUsuario(id, usuario);
-            return Ok(user);
+            if ( ModelState.IsValid)
+            {
+                UsuarioModel user = await _repositorio.AtualizarUsuario(id, usuario);
+                return Ok(user);
+            }
+
+            else { return Ok(new ErrorMessage(403, "Usuário inválido para atualizar, preencha os campos corretamente.")); }
         }
 
         [HttpDelete]
         public async Task<ActionResult<bool>> ExcluirUsuario(int id)
         {
-            await _repositorio.ApagarUsuario(id);
-            return Ok(true);
+            bool resposta = await _repositorio.ApagarUsuario(id);
+            if ( resposta == false)
+            {
+                return Ok(new ErrorMessage(401, $"Usuário de Id {id} não encontrado."));
+            }
+            else
+            {
+                return Ok(true);
+            }
+            
         }
     }
 }
